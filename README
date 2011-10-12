@@ -1,0 +1,3 @@
+Simple application to add smil-based timecode to TEI-encoded transcripts.
+
+Makes extensive use of HTML5 features (File API, <video> tag, etc) and will (likely) work under modern versions of Chrome (and maybe Webkit).

@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/tei-sync.css" />
+    <script src="./js/jquery-1.6.4.min.js"></script>
+    <script src="./js/jquery.scrollTo.js"></script>
+    <script src="./js/jquery.timers.js"></script>
+    <script src="./js/popcorn-complete.js"></script>
+    <script src="./js/popcorn-player-extensions.js"></script>
+    <script src="./js/media_alignment.js"></script>
+    <script type="text/javascript">
+      window.URL = window.URL || window.webkitURL
+      var alignment; 
+      var pop;
+      
+        $(function() {
+          $('#transcript_file').attr('disabled', true);
+          $('#save').attr('disabled', true);
+
+          $('#media_file').bind('change', function() { 
+            var file = $(this)[0].files[0]; 
+            $('video').attr('src', window.URL.createObjectURL(file));
+            pop = Popcorn('#video');
+            $('#transcript_file').attr('disabled', false);
+          });
+
+
+          $('#transcript_file').bind('change', function() { 
+             var file = $(this)[0].files[0]; 
+             alignment = MediaAlignment(pop, file);
+             $('#save').attr('disabled', false);
+          });
+
+          $('#save').bind('click', function() {
+            window.location = alignment.save(); 
+          });
+        });
+
+       $(document).keydown(function(e) {
+               key = {space: 32, left: 37, tab: 9,page_up: 33, page_down: 34, end: 35, home: 36,  up: 38, right: 39, down: 40 };
+               switch(e.which) {
+               case key.space:
+                 alignment.mark();
+                 e.stopPropagation()
+               return false;
+               case key.tab:
+                 alignment.mark();
+                 e.stopPropagation()
+                 return false;
+                 break;
+               case key.down:
+                 alignment.mark();
+                 e.stopPropagation()
+                 return false;
+               break;
+
+               case key.up:
+                 alignment.markIn();
+                 e.stopPropagation()
+                 return false;
+               break;
+                 case key.home:
+                   pop.jump(-5);
+                   e.stopPropagation()
+                 return false;
+                   break;
+                   case key.end:
+                     pop.jump(5);
+                     e.stopPropagation()
+                 return false;
+                   break;
+                 case key.page_up:
+                   alignment.prev();
+                   e.stopPropagation()
+                 return false;
+                   break;
+                   case key.page_down:
+                   alignment.next();
+                   e.stopPropagation()
+                 return false;
+                   break;
+               }
+               });
+
+    </script>
+  </head>
+  <body>
+      <div id="header">
+          <form>
+              <label for="media_file">Media</label><input id="media_file" type="file" name="media" />
+              <label for="transcript_file">Transcript</label><input id="transcript_file" type="file" name="transcript" />
+              <input type="button" id="save" value="Save"/>
+          </form>
+              
+      </div>
+      <div id="main">
+          <div id="media">
+              <video id="video" controls></video>
+ <div class="controls">
+<div><label class="first">Controls</label></div>
+                <div>
+                        <input type="button" value="||"  onclick="pop.pause();" accesskey="s"/>
+                        <input type="button" value="&gt;"  onclick="pop.play();" accesskey="d"/>
+        </div>
+<div><label>Jump</label></div>
+<div>
+                        <input accesskey="y" type="button" value="-5s"  onclick="pop.jump(-5);"/>
+                        <input accesskey="u" type="button" value="+5"  onclick="pop.jump(5);"/>
+</div>
+<div>
+                <input accesskey="h" type="button" value="-15s"  onclick="pop.jump(-15);"/>
+                <input accesskey="j" type="button" value="+15"  onclick="pop.jump(15);"/>
+</div>
+<div>
+                <input accesskey="n" type="button" value="-30s"  onclick="pop.jump(-30);"/>
+                <input accesskey="m" type="button" value="+30"  onclick="pop.jump(30);"/>
+</div>
+<div><label>Sync</label></div>
+<input type="button" onclick="alignment.markIn()" value="Mark In" accesskey="i"/>
+<input type="hidden" />
+<input type="button" onclick="alignment.mark()" value="Mark Out" accesskey="o"/>
+<input type="button" onclick="alignment.preview()" value="Preview" accesskey="p"/>
+
+<div style="margin-top: 2px; margin-right: 5px;">
+    <input accesskey="k" type="button" value="Prev" onclick="alignment.prev()" />
+    <input accesskey="l" type="button" value="Next" onclick="alignment.next()" />
+    <input accesskey=";" type="button" value="Current" onclick="alignment.select($('.active'))" />
+</div>
+</div>
+
+</div>
+              
+
+          <div id="transcript">
+          </div>
+     </div>
+
+  </body>
+</html>

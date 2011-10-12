@@ -1,0 +1,56 @@
+body { color: #333; font-family: Verdana; font-size: 12px; }
+h1 {
+	margin: 0.1em;
+}
+
+.clear {
+	height:  0;
+	clear: both;
+}
+
+#media { position: relative; width: 400px; float: left;}
+.transcript { height: 600px; overflow: auto; border: 1px solid #999; padding: 5px;}
+.transcript tr td { vertical-align: top; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #CCC; }
+
+#header {
+	padding: 20px;
+	border-bottom: 1px solid black;
+	margin-bottom: 20px;
+}
+
+#header label {
+	width: 400px;
+	transcript-align: right;
+}
+
+a:link, a:visited { color: #02065f;}
+tr.active { background-color: #FFFF99;}
+tr.current { background-color: #CCCCCC;}
+tr.active.current { background-color: #CCCC99; }
+
+#video {
+    margin-top: 5px;
+    position: relative;
+}
+
+#transcript {
+   display: block;
+   height: 600px;
+   overflow: scroll;
+}
+
+.controls {
+	padding: 5px;
+	background-color: #CCC;
+	margin: 10px;
+}
+
+.controls label {
+	font-weight: bold;
+	margin-top: 1em;
+	display: block;
+}
+
+.controls label.first {
+	margin-top: 0;
+}       
